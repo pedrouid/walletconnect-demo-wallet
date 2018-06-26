@@ -4,75 +4,75 @@
  * @flow
  */
 
-import React, {Component} from 'react'
-import {Platform, StyleSheet, Text, View, Button, Alert} from 'react-native'
-import {WalletConnector} from 'walletconnect'
-import Camera from 'react-native-camera'
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View, Button, Alert } from 'react-native';
+import { WalletConnector } from 'walletconnect';
+import Camera from 'react-native-camera';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
     'Double tap R on your keyboard to reload,\n' +
     'Shake or press menu button for dev menu'
-})
+});
 
-type Props = {}
+type Props = {};
 export default class App extends Component<Props> {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       qrFound: false,
       opened: false // camera is closed
-    }
+    };
   }
 
   onBarCodeRead = async e => {
     this.setState({
       qrFound: true,
       opened: false
-    })
+    });
 
     // set session
-    const data = JSON.parse(e.data)
-    const {sessionId, sharedKey} = data
+    const data = JSON.parse(e.data);
+    const { sessionId, sharedKey } = data;
 
     try {
       const walletConnector = new WalletConnector(
-        'https://walletconnect.matic.network',
+        'https://bridge.walletconnect.org',
         {
           sessionId,
           sharedKey,
           dappName: 'Walletconnect test'
         }
-      )
+      );
 
       // sending session data
       await walletConnector.sendSessionStatus({
         fcmToken: '1234', // TODO use real fcm token
-        walletWebhook: 'https://walletconnect.matic.network/notification/new',
+        walletWebhook: 'https://bridge.walletconnect.org/notification/new',
         data: {
           address: '0x123' // TODO use real address :)
         }
-      })
+      });
 
       // success alert
-      Alert.alert('Connected', 'Successfully connected with app')
+      Alert.alert('Connected', 'Successfully connected with app');
     } catch (e) {
-      console.log(e)
+      console.log(e);
 
       // success alert
-      Alert.alert('Failed', 'Connection with app failed. Please try again.')
+      Alert.alert('Failed', 'Connection with app failed. Please try again.');
     }
-  }
+  };
 
   scan = () => {
     this.setState({
       opened: true
-    })
-  }
+    });
+  };
 
   render() {
-    let mainView = null
+    let mainView = null;
     if (this.state.opened && !this.state.qrFound) {
       mainView = (
         <Camera
@@ -80,7 +80,7 @@ export default class App extends Component<Props> {
           onBarCodeRead={this.onBarCodeRead}
           aspect={Camera.constants.Aspect.fill}
         />
-      )
+      );
     } else {
       mainView = (
         <View style={styles.buttonContainer}>
@@ -93,9 +93,9 @@ export default class App extends Component<Props> {
             onPress={this.scan}
           />
         </View>
-      )
+      );
     }
-    return <View style={styles.container}>{mainView}</View>
+    return <View style={styles.container}>{mainView}</View>;
   }
 }
 
@@ -114,4 +114,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   }
-})
+});
