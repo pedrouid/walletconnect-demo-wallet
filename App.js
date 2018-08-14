@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Button, Alert } from 'react-native';
-import { WalletConnector } from 'walletconnect';
+import RNWalletConnect from 'rn-walletconnect-wallet'
 import Camera from 'react-native-camera';
 
 const instructions = Platform.select({
@@ -37,9 +37,9 @@ export default class App extends Component<Props> {
     const { sessionId, sharedKey } = data;
 
     try {
-      const walletConnector = new WalletConnector(
-        'https://bridge.walletconnect.org',
+      const walletConnector = new RNWalletConnect(
         {
+          bridgeUrl: 'https://bridge.walletconnect.org'
           sessionId,
           sharedKey,
           dappName: 'Walletconnect test'
