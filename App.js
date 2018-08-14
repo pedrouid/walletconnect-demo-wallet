@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Button, Alert } from 'react-native';
-import RNWalletConnect from 'rn-walletconnect-wallet'
+import RNWalletConnect from 'rn-walletconnect-wallet';
 import Camera from 'react-native-camera';
 
 const instructions = Platform.select({
@@ -37,14 +37,12 @@ export default class App extends Component<Props> {
     const { sessionId, sharedKey } = data;
 
     try {
-      const walletConnector = new RNWalletConnect(
-        {
-          bridgeUrl: 'https://bridge.walletconnect.org'
-          sessionId,
-          sharedKey,
-          dappName: 'Walletconnect test'
-        }
-      );
+      const walletConnector = new RNWalletConnect({
+        bridgeUrl: 'https://bridge.walletconnect.org',
+        sessionId,
+        sharedKey,
+        dappName: 'Walletconnect test'
+      });
 
       // sending session data
       await walletConnector.sendSessionStatus({
