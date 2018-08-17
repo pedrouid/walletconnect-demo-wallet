@@ -5,15 +5,15 @@ This repository contains an example with wallet-connect setup. It uses [rn-nodif
 ### Install
 
 ```bash
-$ npm install
-$ npm run rnnodify
-$ npm run pod # You may want to install `cocoapods` first
+$ yarn
+$ yarn run rnnodify
+$ yarn run pod # You may want to install `cocoapods` first
 ```
 
 ### Start bundler
 
 ```bash
-$ npm start -- --reset-cache
+$ yarn start -- --reset-cache
 ```
 
 ### Open code in xcode
